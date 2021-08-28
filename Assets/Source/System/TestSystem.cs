@@ -7,24 +7,23 @@ public class TestSystem : SystemBase {
     private int value;
 
     public override bool Filter(in Entity entity) {
-        return Database.TestComponent.ContainsKey(entity) && Database.FuckComponent.ContainsKey(entity);
+        return Database.TestCom.ContainsKey(entity);
     }
 
     public override void OnEnter(in Entity entity) {
-        var test = Database.TestComponent[entity];
+        var test = Database.TestCom[entity];
         test.value = this.value++;
-        Database.TestComponent[entity] = test;
+        Database.TestCom[entity] = test;
     }
 
     public override void OnExit(in Entity entity) {
-        Database.TestComponent.Remove(entity);
+        Database.TestCom.Remove(entity);
     }
 
     public override void Update() {
         foreach (var e in this.entities) {
-            var test = Database.TestComponent[e];
-            var fuck = Database.FuckComponent[e];
-            Debug.Log(e + ", " + test.value + ", " + fuck.value);
+            var test = Database.TestCom[e];
+            Debug.Log(e + ", " + test.value);
         }
     }
 }

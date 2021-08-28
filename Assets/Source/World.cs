@@ -8,7 +8,7 @@ public class World : MonoBehaviour {
     protected void Awake() {
         this.systems = new SystemBase[] {
             new TestSystem(),
-            new FuckSystem()
+            new RotateSystem()
         };
 
         Database.Init();
@@ -29,12 +29,11 @@ public class World : MonoBehaviour {
     }
 
     protected void FixedUpdate() {
-        if (Input.GetKeyDown(KeyCode.LeftShift)) {
-            for (int i = 0; i < this.systems.Length; i++) {
-                this.systems[i].Update();
-            }
+        for (int i = 0; i < this.systems.Length; i++) {
+            this.systems[i].Update();
         }
 
         Manager.DoRemove();
+        Manager.DoTask();
     }
 }

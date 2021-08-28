@@ -1,16 +1,16 @@
 ## Roadmap
 
-* ECS核心
+* ECS核心.
     * Entity
     * Component
     * System
     * World
     * Manager
     * Database
-* 与Unity对接
+* 与Unity对接.
     * GameObject存储
     * MonoBehavior转换
-* 颗粒度
+* 颗粒度.
     * 分帧、异步创建对象
 * 复杂业务
     * 实践具有一定深度的业务
