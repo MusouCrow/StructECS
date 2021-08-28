@@ -4,13 +4,16 @@ using Entity = System.Int32;
 
 [BurstCompile]
 public static class Database {
-    public static NativeHashMap<Entity, TestComponent> TestComponentMap;
+    public static NativeHashMap<Entity, TestComponent> TestComponent;
+    public static NativeHashMap<Entity, FuckComponent> FuckComponent;
 
     public static void Init() {
-        TestComponentMap = new NativeHashMap<Entity, TestComponent>(50, Allocator.Persistent);
+        TestComponent = new NativeHashMap<Entity, TestComponent>(16, Allocator.Persistent);
+        FuckComponent = new NativeHashMap<Entity, FuckComponent>(16, Allocator.Persistent);
     }
 
     public static void Clean() {
-        TestComponentMap.Dispose();
+        TestComponent.Dispose();
+        FuckComponent.Dispose();
     }
 }

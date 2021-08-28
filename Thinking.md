@@ -11,3 +11,11 @@
 * 同样也是为了性能，获取Component的操作只能直接从Database操作所属容器了
 * Entity销毁时，会通知各System
     * System顺手去Component容器把东西给销毁了
+
+* 如何收集System
+    * 手动记录？
+    * 利用Attribute，还带自动排序？
+* System的Entity容器从何而来
+    * 自己管理
+    * System得考虑交给Manager持有
+        * 为了更好的跟API联动
