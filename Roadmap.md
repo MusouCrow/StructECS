@@ -1,0 +1,23 @@
+## Roadmap
+
+* ECS核心
+    * Entity
+    * Component
+    * System
+    * World
+    * Manager
+    * Database
+* 与Unity对接
+    * GameObject存储
+    * MonoBehavior转换
+* 颗粒度
+    * 分帧、异步创建对象
+* 复杂业务
+    * 实践具有一定深度的业务
+    * 涉及ECS各方面功能
+    * 涉及Service、Util
+    * 涉及业务子对象（如状态机）
+* 与连连看的结合
+    * 新的连连看？
+    * 传参的解决之道
+    * 协程的解决之道
