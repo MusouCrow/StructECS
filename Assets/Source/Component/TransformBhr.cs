@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[ComponentAttribute(true)]
 public struct TransformCom : IComponent {
     public Transform transform;
 }

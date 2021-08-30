@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Burst;
@@ -26,13 +27,15 @@ public static class Manager {
     private static NativeHashSet<Entity> removes;
     private static Dictionary<GameObject, Entity> gameObject2Entity;
     private static Dictionary<Entity, GameObject> entity2GameObject;
-    private static SystemBase[] systems;
 
     private static List<InstantiatedTask> instantiatedTasks;
     private static List<GameObject> instantingGameObjects;
 
-    public static void Init(SystemBase[] systems) {
-        Manager.systems = systems;
+    public static List<SystemBase> systems;
+
+    public static void Init() {
+        InitSystems();
+
         recycles = new NativeList<int>(Allocator.Persistent);
         removes = new NativeHashSet<Entity>(16, Allocator.Persistent);
         gameObject2Entity = new Dictionary<GameObject, Entity>();
@@ -43,9 +46,12 @@ public static class Manager {
 
     public static void Clean() {
         entityMax = 0;
-        systems = null;
         recycles.Dispose();
         removes.Dispose();
+
+        foreach (var system in systems) {
+            system.Dispose();
+        }
     }
 
     public static void DoRemove() {
@@ -180,6 +186,32 @@ public static class Manager {
         instantiatedTasks.Add(new InstantiatedTask() {handle = handle});
 
         return handle;
+    }
+
+    private static void InitSystems() {
+        systems = new List<SystemBase>();
+
+        var type = typeof(SystemAttribute);
+        var asm = type.Assembly;
+        var types = asm.GetExportedTypes();
+
+        foreach (var t in types) {
+            var attr = t.GetCustomAttribute<SystemAttribute>();
+
+            if (attr != null) {
+                var system = asm.CreateInstance(t.Name) as SystemBase;
+                system.order = attr.order;
+                systems.Add(system);
+            }
+        }
+
+        systems.Sort((SystemBase a, SystemBase b) => {
+            if (a.order == b.order) {
+                return 0;
+            }
+
+            return a.order > b.order ? -1 : 1;
+        });
     }
 
     private static void ApplyInstantiatedTasks(in InstantiatedTask task) {

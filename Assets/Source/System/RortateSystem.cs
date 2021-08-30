@@ -3,6 +3,7 @@ using Unity.Burst;
 using Entity = System.Int32;
 
 [BurstCompile]
+[SystemAttribute]
 public class RotateSystem : SystemBase {
     private int value;
 

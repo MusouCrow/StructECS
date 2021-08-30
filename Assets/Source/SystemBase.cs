@@ -4,6 +4,8 @@ using Entity = System.Int32;
 public class SystemBase {
     protected NativeHashSet<Entity> entities;
 
+    public int order;
+
     public SystemBase() {
         this.entities = new NativeHashSet<Entity>(16, Allocator.Persistent);
     }

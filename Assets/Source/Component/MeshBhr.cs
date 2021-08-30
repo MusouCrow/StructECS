@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[ComponentAttribute(true)]
 public struct MeshCom : IComponent {
     public MeshFilter filter;
     public MeshRenderer renderer;
